@@ -1,0 +1,33 @@
+{
+  "name": "blockchain-pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "dev-test": "tsc  && nodemon build/tests/dev-test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
+    "typescript": "^3.1.1"
+  },
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "ts-jest": "^23.10.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+  }
+}
