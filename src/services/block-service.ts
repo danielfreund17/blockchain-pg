@@ -14,6 +14,6 @@ export class BlockService {
     }
 
     static createHash(timestamp : Date, lastHash : string, data : any) {
-        return SHA256(`${timestamp + lastHash + data}`); //TODO-remove
+        return SHA256(`${timestamp + lastHash + data}`); 
     }
 }
