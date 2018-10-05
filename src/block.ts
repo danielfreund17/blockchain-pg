@@ -1,17 +1,6 @@
 export class Block {
-    constructor (private timestamp : Date, private prevHash : string, private hash : string, private data : any) {}
+    constructor (public timestamp : Date, public prevHash : string, public hash : string, public data : any) {}
 
-    get lastHash() {
-        return this.prevHash;
-    }
-
-    get currentHash() {
-        return this.hash;
-    }
-
-    get blockData() {
-        return this.data;
-    }
 
     toString() {
         return `Block - 
