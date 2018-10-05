@@ -7,7 +7,7 @@ export class BlockService {
 
     static mineBlock(lastBlock: Block, data: any) {
         let timestamp : Date = new Date(Date.now());
-        let lastHash = lastBlock.currentHash;
+        let lastHash = lastBlock.hash;
         let hash = this.createHash(timestamp, lastHash, data);
 
         return new Block(timestamp, lastHash, hash, data);
@@ -15,5 +15,10 @@ export class BlockService {
 
     static createHash(timestamp : Date, lastHash : string, data : any) {
         return SHA256(`${timestamp + lastHash + data}`); 
+    }
+
+    static getBlockHash(block : Block) : string {
+        const {timestamp, prevHash, data} = block;
+        return this.createHash(timestamp, prevHash, data);
     }
 }

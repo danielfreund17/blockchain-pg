@@ -12,10 +12,10 @@ describe('Block', () => {
         block = BlockService.mineBlock(lastBlock, data);
     })
     it('sets the `data` to match the input', () => {
-        expect(block.blockData).toEqual(data);
+        expect(block.data).toEqual(data);
     });
 
     it('sets the `prevHash` to match the hash of the last block', () => {
-        expect(block.lastHash).toEqual(lastBlock.currentHash);
+        expect(block.prevHash).toEqual(lastBlock.hash);
     });
 })
