@@ -1,5 +1,5 @@
-import { Block } from '../src/block';
-import { BlockService } from '../src/services/block-service';
+import { Block } from '../src/blockchain/block';
+import { BlockService } from '../src/blockchain/services/block-service';
 import { } from 'jasmine';
 
 describe('Block', () => {

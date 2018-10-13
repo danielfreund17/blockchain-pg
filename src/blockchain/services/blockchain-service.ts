@@ -1,12 +1,9 @@
 import { Block } from '../block';
 import { BlockService } from '../services/block-service';
-
 export class BlockChainService {
 
     static isChainValid(chain: Block[]): boolean {
         //Validate genesis
-        console.log(chain[0]);
-        console.log(BlockService.genesis());
         if (JSON.stringify(chain[0]) !== JSON.stringify(BlockService.genesis())) {
             return false;
         }
@@ -20,8 +17,6 @@ export class BlockChainService {
             }
 
             //Validate that no one changed a block data.
-            console.log(`hash ${JSON.stringify(currentBlock.hash)}`);
-            console.log(`hash ${JSON.stringify(BlockService.getBlockHash(currentBlock))}`);
             if (JSON.stringify(currentBlock.hash) !== JSON.stringify(BlockService.getBlockHash(currentBlock))) {
                 return false;
             }
@@ -30,5 +25,11 @@ export class BlockChainService {
         return true;
     }
 
+    static replaceChain(currentChain: Block[], newChain: Block[]): string {
+        if((newChain.length <= currentChain.length) || !this.isChainValid(newChain)){ //Chain not long enough 
+            return JSON.stringify(currentChain);
+        }
 
+        return JSON.stringify(newChain); //Replace the chain
+    }
 }
