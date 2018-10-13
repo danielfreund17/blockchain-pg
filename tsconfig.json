@@ -3,12 +3,15 @@
       "module": "commonjs",
       "removeComments": true,
       "sourceMap": true,
+      //"watch":true,
       "target": "es6",
       "outDir": "build"
     },
     "include": [
       "src/**/*.ts",
-      "tests/**/*.ts"
+      "tests/**/*.ts",
+      "app/*.ts",
+      "app/**/*.ts"
     ],
     "exclude": [
       "node_modules",
