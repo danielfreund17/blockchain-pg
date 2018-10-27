@@ -26,7 +26,8 @@ export class BlockChainService {
     }
 
     static replaceChain(currentChain: Block[], newChain: Block[]): string {
-        if((newChain.length <= currentChain.length) || !this.isChainValid(newChain)){ //Chain not long enough 
+        if((newChain.length <= currentChain.length) || !this.isChainValid(newChain)){ 
+            //Chain not long enough 
             return JSON.stringify(currentChain);
         }
 

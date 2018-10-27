@@ -4,10 +4,13 @@ import {BlockChainService} from '../src/blockchain/services/blockchain-service';
 import {Block} from '../src/blockchain/block';
 import {BlockService} from '../src/blockchain/services/block-service';
 import {App} from '../app/app';
+import {P2PServer} from '../app/p2p-server';
 
-const HTTP_PORT = process.env.HTTP_PORT  || 3001;
+
+const HTTP_PORT = +process.env.HTTP_PORT  || 3001;
 const app = new App().express;
-const blockchain = new Blockchain();
+const blockchain : Blockchain = new Blockchain();
+const p2pServer : P2PServer = new P2PServer(blockchain);
 
 
 app.use(bodyParser.json());
@@ -29,3 +32,5 @@ app.post('/mine', (req, res) => {
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);
 });
+
+p2pServer.listen();
