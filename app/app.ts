@@ -1,10 +1,13 @@
 import * as express from 'express';
+import * as bodyParser from 'body-parser';
 
 export class App {
     public express;
 
     constructor() {
         this.express = express();
+        this.express.use(express.json());
+        this.express.use(bodyParser.json());
         this.mountRoutes();
     }
 

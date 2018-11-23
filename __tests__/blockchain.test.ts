@@ -19,7 +19,8 @@ describe('Blockchain', () => {
     });
 
     it('validates the chain', () => {
-        blockchain.addBlock('newData');
+        BlockChainService.addBlockToChain('newData', blockchain.chain);
+        BlockChainService.addBlockToChain('anotherData', blockchain.chain);
         expect(BlockChainService.isChainValid(blockchain.chain)).toEqual(true);
     });
 
@@ -29,21 +30,21 @@ describe('Blockchain', () => {
     });
 
     it('validates that any corrupt block returns false', () => {
-        blockchain2.addBlock('Foo');
+        BlockChainService.addBlockToChain('Foo', blockchain2.chain);
         blockchain2.chain[1].data = 'Other data';
         expect(BlockChainService.isChainValid(blockchain2.chain)).toEqual(false);
     });
 
     it('Expects a new chain to replace the current chain', () => {
-        blockchain2.addBlock('test');
+        BlockChainService.addBlockToChain('test', blockchain2.chain);
         let expectedNewChain = JSON.stringify(blockchain2.chain);
-        expect(BlockChainService.replaceChain(blockchain.chain, blockchain2.chain)).toEqual(expectedNewChain);
+        expect(JSON.stringify(BlockChainService.getBestChain(blockchain.chain, blockchain2.chain))).toEqual(expectedNewChain);
     });
 
     it('Expects not to replace the chain', () => {
-        blockchain.addBlock('block');
-        blockchain2.addBlock('block2');
+        BlockChainService.addBlockToChain('block', blockchain.chain);
+        BlockChainService.addBlockToChain('block2', blockchain2.chain);
         let expectedChain = JSON.stringify(blockchain.chain);
-        expect(BlockChainService.replaceChain(blockchain.chain, blockchain2.chain)).toEqual(expectedChain);
+        expect(JSON.stringify(BlockChainService.getBestChain(blockchain.chain, blockchain2.chain))).toEqual(expectedChain);
     });
 });

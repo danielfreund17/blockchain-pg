@@ -1,4 +1,3 @@
-import * as bodyParser from 'body-parser';
 import {Blockchain} from '../src/blockchain/blockchain';
 import {BlockChainService} from '../src/blockchain/services/blockchain-service';
 import {Block} from '../src/blockchain/block';
@@ -13,7 +12,6 @@ const blockchain : Blockchain = new Blockchain();
 const p2pServer : P2PServer = new P2PServer(blockchain);
 
 
-app.use(bodyParser.json());
 app.listen(HTTP_PORT, (err) => {
     if(err) {
         console.log(err);
@@ -23,14 +21,19 @@ app.listen(HTTP_PORT, (err) => {
 });
 
 
-app.post('/mine', (req, res) => {
-    const block = blockchain.addBlock(req.body.data);
+app.post('/mine', async (req, res) => {
+    const block = await BlockChainService.addBlockToChain(req.body.data, blockchain.chain);
     console.log(`New block added: ${block.toString()}`);
-
+    await p2pServer.syncChains();
     res.redirect('/blocks');
 });
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);
+});
+
+
+process.on('uncaughtException', err => {
+    console.log(err);
 });
 
 p2pServer.listen();
