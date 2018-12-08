@@ -17,7 +17,7 @@ export class BlockChainService {
             }
 
             //Validate that no one changed a block data.
-            var reGeneratedHash = BlockService.getBlockHash(currentBlock);
+            var reGeneratedHash = BlockService.reGenerateBlockHash(currentBlock);
             if (currentBlock.hash.toString() !== reGeneratedHash.toString()) {
                 return false;
             }

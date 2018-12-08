@@ -1,8 +1,8 @@
 import * as WebSocket from 'ws';
-import { Blockchain } from '../src/blockchain/blockchain';
+import { Blockchain } from '../app/src/blockchain/blockchain';
 import { createWriteStream } from 'fs';
-import { BlockChainService } from '../src/blockchain/services/blockchain-service';
-import { Block } from '../src/blockchain/block';
+import { BlockChainService } from '../app/src/blockchain/services/blockchain-service';
+import { Block } from '../app/src/blockchain/block';
 
 const P2P_PORT: number = +process.env.P2P_PORT || 5001;
 const peers: string[] = process.env.PEERS ? process.env.PEERS.split(',') : [];
