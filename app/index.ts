@@ -1,7 +1,7 @@
-import {Blockchain} from '../src/blockchain/blockchain';
-import {BlockChainService} from '../src/blockchain/services/blockchain-service';
-import {Block} from '../src/blockchain/block';
-import {BlockService} from '../src/blockchain/services/block-service';
+import {Blockchain} from '../app/src/blockchain/blockchain';
+import {BlockChainService} from '../app/src/blockchain/services/blockchain-service';
+import {Block} from '../app/src/blockchain/block';
+import {BlockService} from '../app/src/blockchain/services/block-service';
 import {App} from '../app/app';
 import {P2PServer} from '../app/p2p-server';
 
@@ -22,10 +22,15 @@ app.listen(HTTP_PORT, (err) => {
 
 
 app.post('/mine', async (req, res) => {
+    if(req.body.data) {
     const block = await BlockChainService.addBlockToChain(req.body.data, blockchain.chain);
     console.log(`New block added: ${block.toString()}`);
     await p2pServer.syncChains();
     res.redirect('/blocks');
+    }
+    else {
+        res.json({success:false, errors: 'Data is empty.'});
+    }
 });
 app.get('/blocks', (req, res) => {
     res.json(blockchain.chain);

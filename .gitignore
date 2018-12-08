@@ -1,2 +1,5 @@
 node_modules/
 build/
+Notes.txt
+.vscode/tasks.json
+.vscode/launch.json

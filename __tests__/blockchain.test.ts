@@ -1,7 +1,7 @@
-import { Block } from '../src/blockchain/block';
-import { BlockService } from '../src/blockchain/services/block-service';
-import { Blockchain } from '../src/blockchain/blockchain';
-import { BlockChainService } from '../src/blockchain/services/blockchain-service';
+import { Block } from '../app/src/blockchain/block';
+import { BlockService } from '../app/src/blockchain/services/block-service';
+import { Blockchain } from '../app/src/blockchain/blockchain';
+import { BlockChainService } from '../app/src/blockchain/services/blockchain-service';
 import { } from 'jasmine';
 
 
