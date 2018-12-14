@@ -21,9 +21,9 @@ export class BlockService {
             timestamp = new Date().getTime();
             difficulty = BlockService.adjustDifficulty(lastBlock, timestamp)
             hash = this.createHash(timestamp, lastHash, data, nonce, difficulty);
-            block = new Block(timestamp, lastHash, hash, data, nonce, difficulty);
-        } while (!BlockService.foundExactAmountOfZeros(hash, difficulty))
+        } while (!BlockService.foundExactAmountOfZeros(hash, difficulty));
 
+        block = new Block(timestamp, lastHash, hash, data, nonce, difficulty);
         return block;
     }
 
