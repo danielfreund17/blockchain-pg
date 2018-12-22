@@ -4,13 +4,14 @@ import {Block} from '../app/src/blockchain/block';
 import {BlockService} from '../app/src/blockchain/services/block-service';
 import {App} from '../app/app';
 import {P2PServer} from '../app/p2p-server';
+import { ChainUtil } from './chainUtil';
 
 
 const HTTP_PORT = +process.env.HTTP_PORT  || 3001;
 const app = new App().express;
 const blockchain : Blockchain = new Blockchain();
 const p2pServer : P2PServer = new P2PServer(blockchain);
-
+ChainUtil.Initialize();
 
 app.listen(HTTP_PORT, (err) => {
     if(err) {
