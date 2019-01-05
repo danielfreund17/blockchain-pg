@@ -4,7 +4,7 @@ import * as EC from 'elliptic';
 
 export class Wallet {
     private keyPair: EC.ec.KeyPair;
-    public readonly publicKey: string;
+    public readonly publicKey: any;
     public balance: number;
 
     constructor() {

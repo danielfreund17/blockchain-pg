@@ -14,17 +14,36 @@ describe('Transaction', () => {
     let senderWallet: Wallet;
     let receiverWallet: Wallet;
     let amount: number;
+    let receiverAmountBeforeTransaction: number;
+    let senderAmountBeforeTransaction: number;
 
-    beforeEach(() => {
+
+    beforeAll(() => {
         senderWallet = new Wallet();
         receiverWallet = new Wallet();
-        transaction = Transaction.createTransaction(senderWallet, receiverWallet, amount);
+        receiverAmountBeforeTransaction = receiverWallet.balance
+        senderAmountBeforeTransaction = senderWallet.balance;
         amount = 50;
+        transaction = Transaction.createTransaction(senderWallet, receiverWallet, amount);
     });
 
     it('outputs the `amount` subtracted from the wallet balance', () => {
         expect(
             transaction.outputs.find(t => t.address === senderWallet.publicKey).amount
-        ).toEqual(senderWallet.balance - amount);
+        ).toEqual(senderAmountBeforeTransaction - amount);
     });
+
+    it('outputs the `amount` added to the receiver', () => {
+        expect(
+            transaction.outputs.find(t => t.address === receiverWallet.publicKey).amount + receiverAmountBeforeTransaction
+        ).toEqual(receiverWallet.balance);
+    });
+
+    it('verifies the input transaction (signature)', () => {
+        expect(transaction.input.senderAmount).toEqual(senderWallet.balance);
+    });
+
+    it('validates transaction', () => {
+        expect(Transaction.verifyTransactionSignature(transaction, senderWallet, receiverWallet)).toBe(true);
+    })
 });

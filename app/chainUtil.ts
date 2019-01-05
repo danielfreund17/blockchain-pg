@@ -1,5 +1,6 @@
 import * as ECManager from 'elliptic';
 import * as UUIDManager from 'uuid';
+import { SHA256 } from 'crypto-js';
 import { timingSafeEqual } from 'crypto';
 
 export class ChainUtil {
@@ -15,5 +16,17 @@ export class ChainUtil {
 
     static createID(): string {
         return UUIDManager.v1();
+    }
+
+    static createSignature(data: any) {
+        var hash = SHA256(JSON.stringify(data));
+        return hash.toString();
+    }
+
+
+    static verifySignature(signature: string, dataHash: any) {
+        console.log(this.createSignature(dataHash));
+        console.log(signature);
+        return this.createSignature(dataHash) === signature;
     }
 }
