@@ -39,6 +39,14 @@ describe('Transaction', () => {
         ).toEqual(receiverWallet.balance);
     });
 
+    it('verifes that wrong amount wont execute transaction', () => {
+        let newAmount = 5000;
+        const func = () => {
+            Transaction.createTransaction(senderWallet, receiverWallet, newAmount);
+        };
+        expect(func).toThrow();
+    });
+
     it('verifies the input transaction (signature)', () => {
         expect(transaction.input.senderAmount).toEqual(senderWallet.balance);
     });
