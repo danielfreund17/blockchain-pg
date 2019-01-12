@@ -40,7 +40,7 @@ export class Transaction {
         return transaction;
     }
 
-    static createTransaction(senderWallet: Wallet, receiverWallet: Wallet, amountToDeliver: number) {
+    static createTransaction(senderWallet: Wallet, receiverWallet: Wallet, amountToDeliver: number): Transaction {
         let transaction = new this();
 
         if (amountToDeliver === undefined || amountToDeliver > senderWallet.balance) {
@@ -61,7 +61,13 @@ export class Transaction {
         return transaction;
     }
 
-    static signTransaction(transaction: Transaction, senderWallet: Wallet, receiverWallet: Wallet) {
+    static verifyTransactionSignature(transaction: Transaction, senderWallet: Wallet, receiverWallet: Wallet) {
+        return ChainUtil.verifySignature(
+            transaction.input.signature,
+            `${senderWallet.publicKey}${receiverWallet.publicKey}`);
+    }
+
+    private static signTransaction(transaction: Transaction, senderWallet: Wallet, receiverWallet: Wallet) {
         transaction.input = {
             senderAddress: senderWallet.publicKey,
             receiverAddress: receiverWallet.publicKey,
@@ -69,11 +75,5 @@ export class Transaction {
             timestamp: Date.now(),
             signature: ChainUtil.createSignature(`${senderWallet.publicKey}${receiverWallet.publicKey}`)
         };
-    }
-
-    static verifyTransactionSignature(transaction: Transaction, senderWallet: Wallet, receiverWallet: Wallet) {
-        return ChainUtil.verifySignature(
-            transaction.input.signature,
-            `${senderWallet.publicKey}${receiverWallet.publicKey}`);
     }
 }
