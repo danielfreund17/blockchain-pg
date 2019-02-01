@@ -23,11 +23,10 @@ describe('Transaction', () => {
     beforeAll(() => {
         senderWallet = new Wallet();
         receiverWallet = new Wallet();
-        transactionsPool = new TransactionsPool();
         receiverAmountBeforeTransaction = receiverWallet.balance
         senderAmountBeforeTransaction = senderWallet.balance;
         amount = 10;
-        transaction = Transaction.createTransaction(senderWallet, receiverWallet, amount);
+        transaction = TransactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, amount);
     });
 
     it('outputs the `amount` subtracted from the wallet balance', () => {
@@ -45,7 +44,7 @@ describe('Transaction', () => {
     it('verifes that wrong amount wont execute transaction', () => {
         let newAmount = 5000;
         const func = () => {
-            Transaction.createTransaction(senderWallet, receiverWallet, newAmount);
+            TransactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, newAmount);
         };
         expect(func).toThrow();
     });
@@ -55,26 +54,26 @@ describe('Transaction', () => {
     });
 
     it('validates transaction', () => {
-        expect(Transaction.verifyTransactionSignature(transaction, senderWallet, receiverWallet)).toBe(true);
+        expect(TransactionsPool.verifyTransactionSignature(transaction, senderWallet, receiverWallet)).toBe(true);
     });
 
     it('verifies that a new transaction is added to pool', () => {
-        let newTransaction = transactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, amount);
-        expect(transactionsPool.getCountOfTransatcions()).toEqual(1);
+        let newTransaction = TransactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, amount);
+        expect(TransactionsPool.getCountOfTransatcions()).toEqual(1);
     });
 
     it('verifies that a transaction of same sender to receiver will be updated instead of being created', () => {
-        let newTransaction = transactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, amount);
-        expect(transactionsPool.getCountOfTransatcions()).toEqual(1);
+        let newTransaction = TransactionsPool.createOrUpdateTransaction(senderWallet, receiverWallet, amount);
+        expect(TransactionsPool.getCountOfTransatcions()).toEqual(1);
     });
 
     it('expects to find transaction in transaction pool', () => {
-        expect(transactionsPool.getTransactionIfExists(senderWallet, receiverWallet)).not.toEqual(undefined);
+        expect(TransactionsPool.getTransactionIfExists(senderWallet, receiverWallet)).not.toEqual(undefined);
     });
 
     it('expects not to find transaction in transaction pool', () => {
         let sender = new Wallet();
         let receiver = new Wallet();
-        expect(transactionsPool.getTransactionIfExists(sender, receiver)).toEqual(undefined);
+        expect(TransactionsPool.getTransactionIfExists(sender, receiver)).toEqual(undefined);
     });
 });
